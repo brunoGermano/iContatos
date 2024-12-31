@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#F9F0F4"> <!-- Light pink background -->
+    android:background="#F9F0F4">
 
     <!-- Title and Mandatory Fields indicator -->
     <TextView
@@ -208,6 +208,7 @@
             />
     </LinearLayout>
 
+
     <!-- Relationship Input (Dropdown) -->
     <LinearLayout
         android:id="@+id/contactRelationshipInputLayout"
@@ -218,13 +219,18 @@
         android:padding="8dp"
         android:layout_marginBottom="8dp">
 
-        <Spinner
+        <AutoCompleteTextView
             android:id="@+id/relationshipTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:hint="Relacionamento"
             android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:completionThreshold="1"
             />
+
 
         <ImageView
             android:layout_width="wrap_content"
