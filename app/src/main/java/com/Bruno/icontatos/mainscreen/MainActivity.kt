@@ -119,13 +119,13 @@ class MainActivity : AppCompatActivity(), ContactDetailDialogFragment.OnInputLis
         newFragment.show(fragmentManager, "AddEditContactDialogFragment")
     }
 
-//    override fun addContact(contactModel: ContactModel) {
-//        val navHostFragment: Fragment? =
-//            supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
-//
-//        val contactsFragment = navHostFragment?.childFragmentManager?.fragments?.find { it is ContactsFragment } as? ContactsFragment
-//        contactsFragment?.addToList(contactModel) // criado por mim para complementar o que faltou da Anny
-//    }
+    override fun addContact(contactModel: ContactModel) {
+        val navHostFragment: Fragment? =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+
+        val contactsFragment = navHostFragment?.childFragmentManager?.fragments?.find { it is ContactsFragment } as? ContactsFragment
+        contactsFragment?.addToList(contactModel) // criado por mim para complementar o que faltou da Anny
+    }
 
     override fun updateContact(contactModel: ContactModel) {
         val navHostFragment: Fragment? =

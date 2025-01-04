@@ -24,6 +24,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        println(" dentro da ProfileFragment ")
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         // Recuperando o Bundle com o profile salvo
@@ -46,6 +47,7 @@ class ProfileFragment : Fragment() {
     fun updateProfile(contactModel: ContactModel) {
         profile = contactModel
         bindProfile(contactModel)
+        println(" dentro da updateProfile na AddEditContactDialogFragment ")
     }
 
     private fun bindProfile(contactModel: ContactModel) {

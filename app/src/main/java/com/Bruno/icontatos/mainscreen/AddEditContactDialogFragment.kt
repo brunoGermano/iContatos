@@ -17,6 +17,7 @@ import com.Bruno.icontatos.databinding.DialogFragmentAddEditContactBinding
 import com.Bruno.icontatos.databinding.FragmentProfileBinding
 import com.bumptech.glide.Glide
 
+
 class AddEditContactDialogFragment(
     private val nextIndex: Int? = null,
     private val contactToEdit: ContactModel? = null,
@@ -43,24 +44,19 @@ class AddEditContactDialogFragment(
         binding = DialogFragmentAddEditContactBinding.inflate(inflater, container, false)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
 
-//        contactToEdit?.let {
-//            binding.screenTitle.text = "Editar Contato"
-//            binding.contactNameEditText.setText(it.name)
-//            //binding.relationshipTextView.setText(it.relationship)
-//
-//            // 2. Encontrar o índice do relacionamento no array
-//            val selectedPosition = relationshipOptions.indexOf(it.relationship)
-//
-//            // 3. Definir a seleção no Spinner
-//            if(selectedPosition != -1){
-//                binding.relationshipTextView.setSelection(selectedPosition)
-//            }
-//
-//            binding.contactPhoneEditText.setText(it.phoneNumber)
-//            binding.contactInstagramEditText.setText(it.instagram)
-//            binding.contactFacebookEditText.setText(it.facebook)
-//            binding.contactMailEditText.setText(it.email)
-//        }
+//        Toast.makeText(this@AddEditContactDialogFragment, "Dentro da AddEditContactDialogFragment", Toast.LENGTH_SHORT).show()
+            println(" dentro da AddEditContactDialogFragment ")
+
+        contactToEdit?.let {
+            binding.screenTitle.text = "Editar Contato"
+            binding.contactNameEditText.setText(it.name)
+            "Mãe"//binding.relationshipTextView.setText(it.relationship)
+
+            binding.contactPhoneEditText.setText(it.phoneNumber)
+            binding.contactInstagramEditText.setText(it.instagram)
+            binding.contactFacebookEditText.setText(it.facebook)
+            binding.contactMailEditText.setText(it.email)
+        }
 
         if(isEditProfile){
             binding.screenTitle.text = "Editar Perfil"
@@ -69,9 +65,19 @@ class AddEditContactDialogFragment(
 
         Glide.with( this).load( contactToEdit?.contactImage ?: placeholder).into(binding.contactImage)
 
-        val relationshipTypes = resources.getStringArray(R.array.relationship)// cria um array no xml com os relacionamentos (pai, mãe, irmão, etc.)
-        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, relationshipTypes)
-        binding.relationshipTextView.setAdapter(arrayAdapter)
+        var relationshipTypes  = emptyArray<String>()
+        try {
+            relationshipTypes = resources.getStringArray(R.array.relationship)// cria um array do xml com os relacionamentos (pai, mãe, irmão, etc.)
+            val arrayAdapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                relationshipTypes
+            )
+            binding.relationshipTextView.setAdapter(arrayAdapter)
+        }catch (ex: Exception){
+            println("Erro na criação do relacionamento")
+            println(relationshipTypes)
+        }
 
         contactToEdit?.let {
             binding.screenTitle.text = "Editar Contato"
@@ -114,24 +120,24 @@ class AddEditContactDialogFragment(
                     ).show()
                     return@setOnClickListener
                 }
+                println(" dentro da AddEditContactDialogFragment na addContact ")
+                (activity as? OnInputListener)?.addContact(
+                    ContactModel(
+                        nextIndex,
+                        binding.contactNameEditText.text.toString(),
+                        "Pai", // binding.relationshipTextView.text.toString(),
+                        binding.contactPhoneEditText.text.toString(),
+                        binding.contactInstagramEditText.text.toString(),
+                        binding.contactFacebookEditText.text.toString(),
+                        binding.contactMailEditText.text.toString(),
+                        pickedImage // ?: it.contactImage
 
-//                (activity as? OnInputListener)?.addContact(
-//                    ContactModel(
-//                        nextIndex,
-//                        binding.contactNameEditText.text.toString(),
-//                        binding.relationshipTextView.text.toString(),
-//                        binding.contactPhoneEditText.text.toString(),
-//                        binding.contactInstagramEditText.text.toString(),
-//                        binding.contactFacebookEditText.text.toString(),
-//                        binding.contactMailEditText.text.toString(),
-//                        pickedImage ?: it.contactImage
-//
-//                    )
-//                )
+                    )
+                )
 
             }?: run{
                 contactToEdit?.let {
-                    if(isEditProfile){
+//                    if(isEditProfile){
 
 //                        (activity as? OnInputListener)?.updateProfile(
 //                            ContactModel(
@@ -146,7 +152,7 @@ class AddEditContactDialogFragment(
 //                            )
 //                        )
 
-                    }else {
+//                    }else {
 
 //                        (activity as? OnInputListener)?.updateContact(
 //                            ContactModel(
@@ -160,8 +166,8 @@ class AddEditContactDialogFragment(
 //                                pickedImage ?: it.contactImage
 //                            )
 //                        )
+//                    }
 
-                    }
                 }
             }
             dismiss()
@@ -176,7 +182,7 @@ class AddEditContactDialogFragment(
 
     interface OnInputListener {
         fun openAddContact(nextIndex: Int)
-//        fun addContact(contactModel: ContactModel)
+        fun addContact(contactModel: ContactModel)
         fun updateContact(contactModel: ContactModel)
         fun updateProfile(contactModel: ContactModel)
     }

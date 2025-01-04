@@ -27,6 +27,9 @@ class ContactDetailDialogFragment(
     container: ViewGroup?,
     savedInstanceState: Bundle?
     ): View? {
+
+        println(" dentro da ContactDialogFragment ")
+
         binding = DialogFragmentContactDetailBinding.inflate(inflater,container, false)
         // colocar o dialogfragment em fullscreen
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
