@@ -60,7 +60,7 @@ class ProfileFragment : Fragment() {
         Glide.with(this).load(contactModel.contactImage).into(binding.contactImage)
     }
 
-//    Quando o profileFragment estiver sendo destruído salvar toda a informação do profile, como Serializable, no Bundle
+    //    Quando o profileFragment estiver sendo destruído salvar toda a informação do profile, como Serializable, no Bundle
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putSerializable("profile", profile)

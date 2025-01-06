@@ -58,34 +58,34 @@ class ContactsAdapter(
 
     private val customFilter: Filter = object : Filter(){
 
-         // Aqui, filtra a pesquisa
-         override fun performFiltering(_searchedValue: CharSequence?): FilterResults {
-             val searchedValue: String = _searchedValue.toString()
+        // Aqui, filtra a pesquisa
+        override fun performFiltering(_searchedValue: CharSequence?): FilterResults {
+            val searchedValue: String = _searchedValue.toString()
 
-             var tempList: MutableList<ContactModel>
+            var tempList: MutableList<ContactModel>
 
-             if(searchedValue.isEmpty()){
-                 // retorna a lista original
-                 tempList = originalContacts
-             }else{
-                 val filteredList: MutableList<ContactModel> = ArrayList<ContactModel>()
-                 for( contact in originalContacts ){
-                     if (contact.name.lowercase().contains(searchedValue)){
-                         filteredList.add(contact)
-                     }
-                 }
-                 tempList = filteredList
-             }
-             val filterResults = FilterResults()
-             filterResults.values = tempList
-             return filterResults
-         }
+            if(searchedValue.isEmpty()){
+                // retorna a lista original
+                tempList = originalContacts
+            }else{
+                val filteredList: MutableList<ContactModel> = ArrayList<ContactModel>()
+                for( contact in originalContacts ){
+                    if (contact.name.lowercase().contains(searchedValue)){
+                        filteredList.add(contact)
+                    }
+                }
+                tempList = filteredList
+            }
+            val filterResults = FilterResults()
+            filterResults.values = tempList
+            return filterResults
+        }
 
-         // Aqui, publica os resultados filtrados acima
-         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-             contacts = results?.values as MutableList<ContactModel>
-             notifyDataSetChanged()
-         }
+        // Aqui, publica os resultados filtrados acima
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            contacts = results?.values as MutableList<ContactModel>
+            notifyDataSetChanged()
+        }
 
-     }
+    }
 }

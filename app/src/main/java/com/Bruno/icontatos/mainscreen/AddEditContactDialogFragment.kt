@@ -25,7 +25,7 @@ class AddEditContactDialogFragment(
 )  : DialogFragment(){
 
     private val placeholder: String = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
-        private lateinit var binding: DialogFragmentAddEditContactBinding
+    private lateinit var binding: DialogFragmentAddEditContactBinding
     private var pickedImage: String? = null
 
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -45,7 +45,7 @@ class AddEditContactDialogFragment(
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
 
 //        Toast.makeText(this@AddEditContactDialogFragment, "Dentro da AddEditContactDialogFragment", Toast.LENGTH_SHORT).show()
-            println(" dentro da AddEditContactDialogFragment ")
+        println(" dentro da AddEditContactDialogFragment ")
 
         contactToEdit?.let {
             binding.screenTitle.text = "Editar Contato"
@@ -59,6 +59,7 @@ class AddEditContactDialogFragment(
         }
 
         if(isEditProfile){
+            println("dentro da AddEditContactDialogFragment EDITAR PERFIL")
             binding.screenTitle.text = "Editar Perfil"
             binding.contactRelationshipInputLayout.isVisible = false
         }
@@ -77,25 +78,6 @@ class AddEditContactDialogFragment(
         }catch (ex: Exception){
             println("Erro na criação do relacionamento")
             println(relationshipTypes)
-        }
-
-        contactToEdit?.let {
-            binding.screenTitle.text = "Editar Contato"
-            binding.contactNameEditText.setText(it.name)
-            //binding.relationshipTextView.setText(it.relationship)
-
-            // 2. Encontrar o índice do relacionamento no array
-            val selectedPosition = relationshipTypes.indexOf(it.relationship)
-
-            // 3. Definir a seleção no Spinner
-            if(selectedPosition != -1){
-                binding.relationshipTextView.setSelection(selectedPosition)
-            }
-
-            binding.contactPhoneEditText.setText(it.phoneNumber)
-            binding.contactInstagramEditText.setText(it.instagram)
-            binding.contactFacebookEditText.setText(it.facebook)
-            binding.contactMailEditText.setText(it.email)
         }
 
         binding.contactImage.setOnClickListener {
@@ -121,7 +103,7 @@ class AddEditContactDialogFragment(
                     return@setOnClickListener
                 }
                 println(" dentro da AddEditContactDialogFragment na addContact ")
-                (activity as? OnInputListener)?.addContact(
+                (activity as? OnInputListener)?.addContact( // modificadoPelaIA
                     ContactModel(
                         nextIndex,
                         binding.contactNameEditText.text.toString(),
@@ -130,43 +112,42 @@ class AddEditContactDialogFragment(
                         binding.contactInstagramEditText.text.toString(),
                         binding.contactFacebookEditText.text.toString(),
                         binding.contactMailEditText.text.toString(),
-                        pickedImage // ?: it.contactImage
-
+                        pickedImage ?: placeholder // modificadoPelaIA
                     )
                 )
 
             }?: run{
                 contactToEdit?.let {
-//                    if(isEditProfile){
+                    if(isEditProfile){
 
-//                        (activity as? OnInputListener)?.updateProfile(
-//                            ContactModel(
-//                                it.id,
-//                                binding.contactNameEditText.text.toString(),
-//                                binding.relationshipTextView.text.toString(),
-//                                binding.contactPhoneEditText.text.toString(),
-//                                binding.contactInstagramEditText.text.toString(),
-//                                binding.contactFacebookEditText.text.toString(),
-//                                binding.contactMailEditText.text.toString(),
-//                                pickedImage ?: it.contactImage
-//                            )
-//                        )
+                        (activity as? OnInputListener)?.updateProfile(
+                            ContactModel(
+                                it.id,
+                                binding.contactNameEditText.text.toString(),
+                                "Pai", //binding.relationshipTextView.text.toString(),
+                                binding.contactPhoneEditText.text.toString(),
+                                binding.contactInstagramEditText.text.toString(),
+                                binding.contactFacebookEditText.text.toString(),
+                                binding.contactMailEditText.text.toString(),
+                                pickedImage ?: it.contactImage
+                            )
+                        )
 
-//                    }else {
+                    }else {
 
-//                        (activity as? OnInputListener)?.updateContact(
-//                            ContactModel(
-//                                it.id,
-//                                binding.contactNameEditText.text.toString(),
-//                                binding.relationshipTextView.text.toString(),
-//                                binding.contactPhoneEditText.text.toString(),
-//                                binding.contactInstagramEditText.text.toString(),
-//                                binding.contactFacebookEditText.text.toString(),
-//                                binding.contactMailEditText.text.toString(),
-//                                pickedImage ?: it.contactImage
-//                            )
-//                        )
-//                    }
+                        (activity as? OnInputListener)?.updateContact(
+                            ContactModel(
+                                it.id,
+                                binding.contactNameEditText.text.toString(),
+                                "Pai", //binding.relationshipTextView.text.toString(),
+                                binding.contactPhoneEditText.text.toString(),
+                                binding.contactInstagramEditText.text.toString(),
+                                binding.contactFacebookEditText.text.toString(),
+                                binding.contactMailEditText.text.toString(),
+                                pickedImage ?: it.contactImage
+                            )
+                        )
+                    }
 
                 }
             }

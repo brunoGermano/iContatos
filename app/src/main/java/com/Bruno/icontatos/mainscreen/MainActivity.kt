@@ -14,7 +14,9 @@ import com.Bruno.icontatos.ContactModel
 import com.Bruno.icontatos.R
 import com.Bruno.icontatos.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), ContactDetailDialogFragment.OnInputListener, AddEditContactDialogFragment.OnInputListener {
+class MainActivity : AppCompatActivity(),
+                     ContactDetailDialogFragment.OnInputListener,
+                     AddEditContactDialogFragment.OnInputListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -105,13 +107,13 @@ class MainActivity : AppCompatActivity(), ContactDetailDialogFragment.OnInputLis
 
     /*IMplementando mudanças pra fazer a parte de edicção funcionar, parte que ela não gravou o vídeo */
 
-   /* override fun openEditDialog(contactModel: ContactModel){
-        val fragmentManager = supportFragmentManager
-        val newFragment = AddEditContactDialogFragment(contactToEdit = contactModel)
-        newFragment.show(fragmentManager, "AddEditContactDialogFragment")
-    }
+    /* override fun openEditDialog(contactModel: ContactModel){
+         val fragmentManager = supportFragmentManager
+         val newFragment = AddEditContactDialogFragment(contactToEdit = contactModel)
+         newFragment.show(fragmentManager, "AddEditContactDialogFragment")
+     }
 
-    */
+     */
 
     override fun openAddContact(nextIndex: Int){
         val fragmentManager = supportFragmentManager
@@ -119,7 +121,7 @@ class MainActivity : AppCompatActivity(), ContactDetailDialogFragment.OnInputLis
         newFragment.show(fragmentManager, "AddEditContactDialogFragment")
     }
 
-    override fun addContact(contactModel: ContactModel) {
+    override fun addContact(contactModel: ContactModel) { // modificadoPelaIA
         val navHostFragment: Fragment? =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
 

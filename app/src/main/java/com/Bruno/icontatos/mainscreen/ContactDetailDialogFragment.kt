@@ -19,13 +19,13 @@ class ContactDetailDialogFragment(
     private val contactModel: ContactModel, // Do jean  funcionou aqui
     private val onInputListener: OnInputListener
 ):DialogFragment() {
-//    private lateinit var contactModel: ContactModel
+    //    private lateinit var contactModel: ContactModel
     private lateinit var binding: DialogFragmentContactDetailBinding
 
     override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         println(" dentro da ContactDialogFragment ")
@@ -84,7 +84,7 @@ class ContactDetailDialogFragment(
     }
 
     override fun getTheme(): Int {
-    return R.style.FullScreenDialog
+        return R.style.FullScreenDialog
     }
 
     fun updateContact( updatedContact: ContactModel) {

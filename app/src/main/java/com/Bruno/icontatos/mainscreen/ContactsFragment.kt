@@ -113,7 +113,8 @@ class ContactsFragment : Fragment() {
         } )
 
         binding.floatingAddButton.setOnClickListener{
-//            addToList()
+//            addToList() // eu bruno coloquei o método errado aqui primeiro camo o fragment para inserir o s dados., como na inha abaixo
+            (activity as? AddEditContactDialogFragment.OnInputListener)?.openAddContact(contacts.size) // modificadoPelaIA
         }
 
         return binding.root
@@ -125,8 +126,9 @@ class ContactsFragment : Fragment() {
     }
 
     // EU implementei para cria o novo contato
-    fun addToList(contactModel: ContactModel) {
+    fun addToList(contactModel: ContactModel) { // modificadoPelaIA
         contacts.add(contactModel)
+        adapter.notifyDataSetChanged() // modificadoPelaIA
     }
 
     fun updateContact(contactModel: ContactModel) {
@@ -136,6 +138,7 @@ class ContactsFragment : Fragment() {
         // 2. Atualiza o objeto na lista, se encontrado
         if (indexToUpdate != -1) {
             contacts[indexToUpdate] = contactModel
+            adapter.notifyItemChanged(indexToUpdate) // modificadoPelaIA
         }
 
         /*
