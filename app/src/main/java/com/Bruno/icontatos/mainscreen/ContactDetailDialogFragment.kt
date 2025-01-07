@@ -9,7 +9,6 @@ import androidx.fragment.app.DialogFragment
 import com.Bruno.icontatos.ContactModel
 import com.Bruno.icontatos.R
 import com.Bruno.icontatos.databinding.DialogFragmentContactDetailBinding
-import com.Bruno.icontatos.databinding.FragmentContactsBinding
 import com.bumptech.glide.Glide
 
 /* vamos usar o DialogFragment porque a "ContactDetailDialogFragment" não está associada a nenhuma stack, a não ser a stack principal e para ganhar as propriedades de um AlertDialog
@@ -72,6 +71,12 @@ class ContactDetailDialogFragment(
             dismiss()
         }
 
+        binding.editButton.setOnClickListener { // modificadoPelaIA
+            // onInputListener.openEditDialog(contactModel) // modificadoPelaIA
+            (activity as? AddEditContactDialogFragment.OnInputListener)?.openEditDialog(contactModel)
+            dismiss() // modificadoPelaIA
+        }
+
         // o buttonDelete é um botão normal, só usamos a function "onclickListener" nos buttons customizados que criamos
         binding.buttonDelete.setOnClickListener{
             onInputListener.deleteContact(contactModel)
@@ -88,7 +93,14 @@ class ContactDetailDialogFragment(
     }
 
     fun updateContact( updatedContact: ContactModel) {
+        binding.contactName.text = updatedContact.name
+        binding.contactRelationship.text = updatedContact.relationship
+        binding.infoFacebook.setInfoValue(updatedContact.facebook)
+        binding.infoPhone.setInfoValue(updatedContact.phoneNumber)
+        binding.infoInstagram.setInfoValue(updatedContact.instagram)
+        binding.infoMail.setInfoValue(updatedContact.email)
 
+        Glide.with(this).load(updatedContact.contactImage).into(binding.contactImage) // modificadoPelaIA
     }
 
     interface OnInputListener{

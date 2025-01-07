@@ -113,9 +113,13 @@ class ContactsFragment : Fragment() {
         } )
 
         binding.floatingAddButton.setOnClickListener{
-//            addToList() // eu bruno coloquei o método errado aqui primeiro camo o fragment para inserir o s dados., como na inha abaixo
-            (activity as? AddEditContactDialogFragment.OnInputListener)?.openAddContact(contacts.size) // modificadoPelaIA
-        }
+            (activity as? MainActivity)?.openAddContact( contacts.size ) // modificadoPelaIA
+        }// ultima versoa dada pela iA
+
+//        binding.floatingAddButton.setOnClickListener{
+////            addToList() // eu bruno coloquei o método errado aqui primeiro camo o fragment para inserir o s dados., como na inha abaixo
+//            (activity as? AddEditContactDialogFragment.OnInputListener)?.openAddContact(contacts.size) // modificadoPelaIA
+//        } // versao dada pela IA que testei e funcionou
 
         return binding.root
     }
@@ -126,7 +130,7 @@ class ContactsFragment : Fragment() {
     }
 
     // EU implementei para cria o novo contato
-    fun addToList(contactModel: ContactModel) { // modificadoPelaIA
+    fun addToList(contactModel: ContactModel) {
         contacts.add(contactModel)
         adapter.notifyDataSetChanged() // modificadoPelaIA
     }
@@ -149,6 +153,4 @@ class ContactsFragment : Fragment() {
 
          */
     }
-
-
 }

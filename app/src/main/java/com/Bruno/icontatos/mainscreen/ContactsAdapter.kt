@@ -1,7 +1,6 @@
 package com.Bruno.icontatos.mainscreen
 
 import android.view.LayoutInflater
-import android.view.PixelCopy.Request
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter

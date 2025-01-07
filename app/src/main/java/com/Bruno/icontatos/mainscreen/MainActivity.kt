@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.ContactsContract.Profile
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -107,26 +106,25 @@ class MainActivity : AppCompatActivity(),
 
     /*IMplementando mudanças pra fazer a parte de edicção funcionar, parte que ela não gravou o vídeo */
 
-    /* override fun openEditDialog(contactModel: ContactModel){
-         val fragmentManager = supportFragmentManager
-         val newFragment = AddEditContactDialogFragment(contactToEdit = contactModel)
-         newFragment.show(fragmentManager, "AddEditContactDialogFragment")
-     }
-
-     */
-
-    override fun openAddContact(nextIndex: Int){
+    override fun openEditDialog(contactModel: ContactModel){
         val fragmentManager = supportFragmentManager
-        val newFragment = AddEditContactDialogFragment(nextIndex)
+        val newFragment = AddEditContactDialogFragment(contactToEdit = contactModel)
         newFragment.show(fragmentManager, "AddEditContactDialogFragment")
     }
 
-    override fun addContact(contactModel: ContactModel) { // modificadoPelaIA
+
+    override fun openAddContact(nextIndex: Int){
+        val fragmentManager = supportFragmentManager
+        val newFragment = AddEditContactDialogFragment(nextIndex = nextIndex) // modificadoPelaIA
+        newFragment.show(fragmentManager, "AddEditContactDialogFragment")
+    }
+
+    override fun addContact(contactModel: ContactModel) {
         val navHostFragment: Fragment? =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
 
         val contactsFragment = navHostFragment?.childFragmentManager?.fragments?.find { it is ContactsFragment } as? ContactsFragment
-        contactsFragment?.addToList(contactModel) // criado por mim para complementar o que faltou da Anny
+        contactsFragment?.addToList(contactModel)
     }
 
     override fun updateContact(contactModel: ContactModel) {
@@ -136,8 +134,8 @@ class MainActivity : AppCompatActivity(),
         val contactsFragment = navHostFragment?.childFragmentManager?.fragments?.find { it is ContactsFragment } as? ContactsFragment
         contactsFragment?.updateContact(contactModel)
 
-        val contactDetailFragment = navHostFragment?.parentFragmentManager?.fragments?.find { it is ContactDetailDialogFragment } as? ContactDetailDialogFragment
-        contactDetailFragment?.updateContact(contactModel) // não faz nada porque não foi implementada por mim ainda
+        val contactDetailFragment = supportFragmentManager.fragments.find { it is ContactDetailDialogFragment && it.isVisible } as? ContactDetailDialogFragment
+        contactDetailFragment?.updateContact(contactModel)  // modificadoPelaIA
     }
 
     override fun updateProfile(contactModel: ContactModel) {

@@ -14,7 +14,6 @@ import androidx.fragment.app.DialogFragment
 import com.Bruno.icontatos.ContactModel
 import com.Bruno.icontatos.R
 import com.Bruno.icontatos.databinding.DialogFragmentAddEditContactBinding
-import com.Bruno.icontatos.databinding.FragmentProfileBinding
 import com.bumptech.glide.Glide
 
 
@@ -41,16 +40,21 @@ class AddEditContactDialogFragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = DialogFragmentAddEditContactBinding.inflate(inflater, container, false)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
 
-//        Toast.makeText(this@AddEditContactDialogFragment, "Dentro da AddEditContactDialogFragment", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(),
+                      "Dentro da AddEditContactDialogFragment",
+                      Toast.LENGTH_SHORT).show()
+
         println(" dentro da AddEditContactDialogFragment ")
 
         contactToEdit?.let {
             binding.screenTitle.text = "Editar Contato"
             binding.contactNameEditText.setText(it.name)
-            "Mãe"//binding.relationshipTextView.setText(it.relationship)
+
+            binding.relationshipTextView.setText(it.relationship)
 
             binding.contactPhoneEditText.setText(it.phoneNumber)
             binding.contactInstagramEditText.setText(it.instagram)
@@ -59,9 +63,10 @@ class AddEditContactDialogFragment(
         }
 
         if(isEditProfile){
-            println("dentro da AddEditContactDialogFragment EDITAR PERFIL")
             binding.screenTitle.text = "Editar Perfil"
             binding.contactRelationshipInputLayout.isVisible = false
+        }else{
+            binding.screenTitle.text = "Adicionar Contato"
         }
 
         Glide.with( this).load( contactToEdit?.contactImage ?: placeholder).into(binding.contactImage)
@@ -90,10 +95,9 @@ class AddEditContactDialogFragment(
 
         binding.buttonConfirm.setOnClickListener {
             nextIndex?.let {
-                if (binding.contactPhoneEditText.text.isNullOrBlank() ||
-                    binding.contactMailEditText.text.isNullOrBlank() ||
-                    binding.contactMailEditText.text.isNullOrBlank()
-                // || binding.relationshipTextView.text.isNullOrBlank()
+                if (binding.contactNameEditText.text.isNullOrBlank() || // modificadoPelaIA
+                    binding.contactPhoneEditText.text.isNullOrBlank() ||
+                    binding.contactMailEditText.text.isNullOrBlank() && binding.relationshipTextView.text.isNullOrBlank()
                 ) {
                     Toast.makeText(
                         requireContext(),
@@ -103,16 +107,17 @@ class AddEditContactDialogFragment(
                     return@setOnClickListener
                 }
                 println(" dentro da AddEditContactDialogFragment na addContact ")
-                (activity as? OnInputListener)?.addContact( // modificadoPelaIA
+                (activity as? OnInputListener)?.addContact(
                     ContactModel(
                         nextIndex,
                         binding.contactNameEditText.text.toString(),
-                        "Pai", // binding.relationshipTextView.text.toString(),
+                        binding.relationshipTextView.text.toString(), //modificadoPelaIA
                         binding.contactPhoneEditText.text.toString(),
                         binding.contactInstagramEditText.text.toString(),
                         binding.contactFacebookEditText.text.toString(),
                         binding.contactMailEditText.text.toString(),
-                        pickedImage ?: placeholder // modificadoPelaIA
+                        pickedImage ?: placeholder// modificadoPelaIA
+
                     )
                 )
 
@@ -124,7 +129,7 @@ class AddEditContactDialogFragment(
                             ContactModel(
                                 it.id,
                                 binding.contactNameEditText.text.toString(),
-                                "Pai", //binding.relationshipTextView.text.toString(),
+
                                 binding.contactPhoneEditText.text.toString(),
                                 binding.contactInstagramEditText.text.toString(),
                                 binding.contactFacebookEditText.text.toString(),
@@ -139,7 +144,7 @@ class AddEditContactDialogFragment(
                             ContactModel(
                                 it.id,
                                 binding.contactNameEditText.text.toString(),
-                                "Pai", //binding.relationshipTextView.text.toString(),
+                                binding.relationshipTextView.text.toString(),
                                 binding.contactPhoneEditText.text.toString(),
                                 binding.contactInstagramEditText.text.toString(),
                                 binding.contactFacebookEditText.text.toString(),
@@ -148,7 +153,6 @@ class AddEditContactDialogFragment(
                             )
                         )
                     }
-
                 }
             }
             dismiss()
@@ -162,6 +166,7 @@ class AddEditContactDialogFragment(
     }
 
     interface OnInputListener {
+        fun openEditDialog(contactModel: ContactModel)
         fun openAddContact(nextIndex: Int)
         fun addContact(contactModel: ContactModel)
         fun updateContact(contactModel: ContactModel)
