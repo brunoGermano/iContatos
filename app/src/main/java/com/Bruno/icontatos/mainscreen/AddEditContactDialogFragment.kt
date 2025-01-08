@@ -44,9 +44,7 @@ class AddEditContactDialogFragment(
         binding = DialogFragmentAddEditContactBinding.inflate(inflater, container, false)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
 
-        Toast.makeText(requireContext(),
-                      "Dentro da AddEditContactDialogFragment",
-                      Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(),"Dentro da AddEditContactDialogFragment", Toast.LENGTH_SHORT).show()
 
         println(" dentro da AddEditContactDialogFragment ")
 
@@ -129,7 +127,7 @@ class AddEditContactDialogFragment(
                             ContactModel(
                                 it.id,
                                 binding.contactNameEditText.text.toString(),
-
+                                "",  // Aqui estava faltando, como no profile não temos relationship setado, ele não precisa pegar do binding. Ele não precisa, nesse caso, ser dinâmico.
                                 binding.contactPhoneEditText.text.toString(),
                                 binding.contactInstagramEditText.text.toString(),
                                 binding.contactFacebookEditText.text.toString(),

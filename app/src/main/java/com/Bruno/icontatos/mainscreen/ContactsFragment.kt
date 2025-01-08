@@ -25,9 +25,10 @@ class ContactsFragment : Fragment() {
             "Paula",
             "Imão/Irmã",
             "999485883",
-            email = "mail@gmail.com",
+            email = "PaulaMail@gmail.com",
             contactImage = "https://randomuser.me/api/portraits/women/23.jpg",
-            instagram = "instagram"
+            instagram = "PaulaInstagram",
+            facebook = "FaceDaPaula"
         ),
         ContactModel(
             1,
